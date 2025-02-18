@@ -1,10 +1,12 @@
-from flask import Flask, request, jsonify
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
 
 app = Flask(__name__)
 @app.route('/')
 def home():
-    return "Flask app is running!"
+    df = pd.read_csv("data/sensor_data.csv")  # Read sensor data
+    predicted_demand = 150  # Dummy prediction
+    return render_template("index.html", table=df.to_html(), demand=predicted_demand)
 
 @app.route('/get-sensor-data', methods=['GET'])
 def get_sensor_data():
